@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homer-webapp
+  namespace: homer
+spec:
+  ports:
+    - port: 9080
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: homer-webapp
+  sessionAffinity: None
+  type: LoadBalancer

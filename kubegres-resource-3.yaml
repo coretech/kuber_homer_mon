@@ -1,0 +1,48 @@
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: mypostgres
+  namespace: kubegres-system
+spec:
+
+  replicas: 3
+  image: postgres:14.1
+  port: 5432
+
+  #imagePullSecrets:
+  #  - name: my-private-docker-repo-secret
+
+  database:
+    size: 500Mi
+    storageClassName: metrics-nfs-storage
+  #  volumeMount: /var/lib/postgres/data
+
+  #customConfig: mypostgres-conf
+
+  #failover:
+  #  isDisabled: true
+  #  promotePod: "mypostgres-3-0"
+
+  #backup:
+  #  schedule: "*/1 * * * *"
+  #  pvcName: postgres-db-mypostgres-2-0
+  #  volumeMount: /tmp/mypostgres
+
+  env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mypostgres-secret
+          key: superUserPassword
+
+    - name: POSTGRES_REPLICATION_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mypostgres-secret
+          key: replicationUserPassword
+
+    - name: POSTGRES_MYAPP_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: mypostgres-secret
+          key: myAppUserPassword
