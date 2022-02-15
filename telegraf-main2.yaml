@@ -20,18 +20,24 @@ spec:
               cpu: 100m
               memory: 100Mi
             requests:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 300m
+              memory: 300i
               #          envFrom:
               #            - secretRef:
               #                name: telegraf-secrets
           volumeMounts:
              - name: telegraf-pv
                mountPath: /etc/telegraf/telegraf.com
+             - name: telegraf-etc
+               mountPath: /etc/
               #              subPath: telegraf.conf
               #              readOnly: true
       volumes:
          - name: telegraf-pv
+           persistentVolumeClaim:
+              claimName: telegraf-pvc
+
+         - name: telegraf-etc
            persistentVolumeClaim:
               claimName: telegraf-pvc
               #          #configMap:

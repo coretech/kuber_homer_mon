@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2022-02-14T21:59:55Z"
+  name: telegraf-config
+  namespace: telegraf
+  resourceVersion: "18486776"
+  selfLink: /api/v1/namespaces/default/configmaps/telegraf-config
+  uid: 85a8e5fd-f9ba-4bea-befb-ae470e7439b1
