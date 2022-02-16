@@ -72,6 +72,7 @@ spec:
             - containerPort: 9060
               protocol: UDP
             - containerPort: 9061
+              protocol: TCP
             - containerPort: 9090
             - containerPort: 9096
           resources: {}
