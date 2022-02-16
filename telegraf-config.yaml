@@ -1,9 +1,212 @@
 apiVersion: v1
+
 kind: ConfigMap
 metadata:
-  creationTimestamp: "2022-02-14T21:59:55Z"
   name: telegraf-config
   namespace: telegraf
-  resourceVersion: "18486776"
-  selfLink: /api/v1/namespaces/default/configmaps/telegraf-config
-  uid: 85a8e5fd-f9ba-4bea-befb-ae470e7439b1
+data:
+  telegraf.conf: |+
+   [global_tags]
+
+    # Configuration for telegraf agent
+    [agent]
+      ## Default data collection interval for all inputs
+      interval = "10s"
+      ## Rounds collection interval to 'interval'
+      ## ie, if interval="10s" then always collect on :00, :10, :20, etc.
+      round_interval = true
+
+      ## Telegraf will send metrics to outputs in batches of at most
+      ## metric_batch_size metrics.
+      ## This controls the size of writes that Telegraf sends to output plugins.
+      metric_batch_size = 1000
+
+      ## For failed writes, telegraf will cache metric_buffer_limit metrics for each
+      ## output, and will flush this buffer on a successful write. Oldest metrics
+      ## are dropped first when this buffer fills.
+      ## This buffer only fills when writes fail to output plugin(s).
+      metric_buffer_limit = 10000
+
+      ## Collection jitter is used to jitter the collection by a random amount.
+      ## Each plugin will sleep for a random time within jitter before collecting.
+      ## This can be used to avoid many plugins querying things like sysfs at the
+      ## same time, which can have a measurable effect on the system.
+      collection_jitter = "0s"
+
+      ## Default flushing interval for all outputs. Maximum flush_interval will be
+      ## flush_interval + flush_jitter
+      flush_interval = "10s"
+      ## Jitter the flush interval by a random amount. This is primarily to avoid
+      ## large write spikes for users running a large number of telegraf instances.
+      ## ie, a jitter of 5s and interval 10s means flushes will happen every 10-15s
+      flush_jitter = "0s"
+
+     precision = ""
+
+      ## Logging configuration:
+      ## Run telegraf with debug log messages.
+      debug = true
+      ## Run telegraf in quiet mode (error log messages only).
+      quiet = false
+      ## Specify the log file name. The empty string means to log to stderr.
+      logfile = ""
+
+      ## Override default hostname, if empty use os.Hostname()
+      hostname = "telegraf-kuber"
+      ## If set to true, do no set the "host" tag in the telegraf agent.
+      omit_hostname = true
+
+
+    ###############################################################################
+    #                            OUTPUT PLUGINS                                   #
+    ###############################################################################
+
+    # Configuration for sending metrics to InfluxDB
+    [[outputs.influxdb]]
+     urls = ["http://10.233.48.203:8086"]
+
+      ## The target database for metrics; will be created as needed.
+      database = "gatling"
+
+      ## HTTP Basic Auth
+      username = "admin"
+      password = "kraken"
+
+      ## HTTP User-Agent
+    ###############################################################################
+    #                            INPUT PLUGINS                                    #
+    ###############################################################################
+
+    # Read metrics about cpu usage
+    [[inputs.cpu]]
+      ## Whether to report per-cpu stats or not
+      percpu = true
+      ## Whether to report total system cpu stats or not
+      totalcpu = true
+      ## If true, collect raw CPU time metrics.
+      collect_cpu_time = false
+      ## If true, compute and report the sum of all non-idle CPU states.
+      report_active = false
+
+
+    # Read metrics about disk usage by mount point
+    [[inputs.disk]]
+      ## By default stats will be gathered for all mount points.
+      ## Set mount_points will restrict the stats to only the specified mount points.
+      # mount_points = ["/"]
+
+      ## Ignore mount points by filesystem type.
+      ignore_fs = ["tmpfs", "devtmpfs", "devfs", "overlay", "aufs", "squashfs"]
+
+
+    # Read metrics about disk IO by device
+    [[inputs.diskio]]
+
+    # Get kernel statistics from /proc/stat
+    [[inputs.kernel]]
+      # no configuration
+
+
+    # Read metrics about memory usage
+    [[inputs.mem]]
+      # no configuration
+
+
+    # Get the number of processes and group them by status
+    [[inputs.processes]]
+      # no configuration
+
+
+    # Read metrics about swap memory usage
+    [[inputs.swap]]
+      # no configuration
+
+
+    # Read metrics about system load & uptime
+    [[inputs.system]]
+      # no configuration
+
+    # Collect TCP connections state and UDP socket counts
+    [[inputs.netstat]]
+      # no configuration
+
+    # Gather metrics about network interfaces
+    [[inputs.net]]
+    [[processors.starlark]]
+    #   #   ## should be set at once.
+    #   #   ##
+    #   #namepass = ["/root/python_dialer/test.json"]
+    namepass = ["kafka_consumer"]
+    #   
+    #   #   ## Source of the Starlark script.
+    #   #source = '''
+    #   #load("json.star", "json")
+    #   #load("logging.star", "log")
+    #   #
+    #   #def apply(metric):
+    #   #   j = json.decode(metric.fields.get("value"))
+    #   #   metrics=[]
+    #   #   new_metric = Metric("kafka_stats")
+    #   #   new_metric.tags["server_hostname"] = str(j["server_hostname"])
+    #   #   new_metric.fields["uptime"] = int(j["uptime"])
+    #   #   new_metric.fields["sessions_max"] = int(j["sessions_max"])
+    #   #   new_metric.fields["sessions_active"] = int(j["sessions_active"])
+    #   #   new_metric.fields["cps_active"] = int(j["cps_active"])
+    #   #   new_metric.fields["cps_active"] = int(j["cps_active"])
+    #   #   new_metric.fields["cpu_idle"] = int(j["cpu_idle"])
+    #   #   metrics.append(new_metric)
+    #   #   return metrics
+    #   #'''
+    source = '''
+   load("json.star", "json")
+   load("logging.star", "log")
+   def apply(metric):
+               j = json.decode(metric.fields.get("value")) # json
+               metrics=[]
+               for group in j:    #  array of jason elements  to become Metrics
+                   new_metric = Metric("fspbx_http")
+                   new_metric.tags["server_hostname"] = str(j["hostname"])
+                   new_metric.fields["request_time"] = int(j["request_time"])
+                   new_metric.tags["status"] = str(j["status"])
+                   metrics.append(new_metric)
+               return metrics
+    '''    
+           
+    #   #   ## File containing a Starlark script.
+    #   #script = "/usr/local/bin/script2.star"
+    #   #
+    #   #   ## The constants of the Starlark script.
+    [processors.starlark.constants]
+    #   #   #   max_size = 10
+    #   #   #   threshold = 0.75
+    #   #      default_name = "Julia"
+    debug_mode = true
+
+    [[inputs.kafka_consumer]]
+    #   #   ## Kafka brokers.
+    #   #brokers = ["145.239.102.212:9092,51.195.69.231:9092,137.74.249.153:9092"]
+       brokers = ["141.94.5.150:9092","51.38.198.90:9092","137.74.249.151:9092"]
+    #   #
+    #   #   ## Topics to consume.
+    #   #   topics = ["fspbx_heartbeats","fspbx_events","fspbx_errors"]
+    #   #   topics = ["voip_health"]
+       topics = ["fspbx_errors"]
+    #   #
+    #   #   ## When set this tag will be added to all metrics with the topic as the value.
+    #   #    topic_tag = "fspbx_mon"
+    #   #
+    #   #   ## Optional Client id
+       client_id = "Telegraf_2"
+    #   #
+    #   #   ## Name of the consumer group.
+       consumer_group = "telegraf_metrics_consumers_2"
+    #   #
+    #   #   ## Data format to consume.
+    #   #   ## Each data format has its own unique set of configuration options, read
+    #   #   ## more about them here:
+    #   #   ## https://github.com/influxdata/telegraf/blob/master/docs/DATA_FORMATS_INPUT.md
+    #   #   data_format = "influx"
+       data_format = "value"
+       data_type = "string"
+    #   
+   
