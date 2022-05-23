@@ -2,7 +2,7 @@ apiVersion: kubegres.reactive-tech.io/v1
 kind: Kubegres
 metadata:
   name: mypostgres
-  namespace: default
+  namespace: kubegres-system
 
 spec:
 

@@ -54,6 +54,13 @@ spec:
       port: 9061
       targetPort: 9061
       nodePort: 30961
+    - name: "9090"
+      port: 9090
+      targetPort: 9090
+    - name: "9096"
+      port: 9096
+      targetPort: 9096
+
   selector:
     io.kompose.service: heplify-server
 

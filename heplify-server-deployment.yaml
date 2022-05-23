@@ -32,7 +32,8 @@ spec:
             - ./heplify-server
           env:
             - name: HEPLIFYSERVER_DBADDR
-              value: 10.233.18.94:5432
+              #value: 10.233.42.168:5432
+              value: 10.233.8.165:5432
             - name: HEPLIFYSERVER_DBCONFTABLE
               value: homer_config
             - name: HEPLIFYSERVER_DBDATATABLE
@@ -40,7 +41,7 @@ spec:
             - name: HEPLIFYSERVER_DBDRIVER
               value: postgres
             - name: HEPLIFYSERVER_DBDROPDAYS
-              value: "15"
+              value: "2"
             - name: HEPLIFYSERVER_DBPASS
               value: Y6MTmRl9nEfaOJrq9CYVSKJM
             - name: HEPLIFYSERVER_DBROTATE
@@ -61,10 +62,12 @@ spec:
               value: "true"
             - name: HEPLIFYSERVER_LOKITIMER
               value: "2"
-            - name: HEPLIFYSERVER_LOKIURL
-              value: http://loki:3100/api/prom/push
+              #            - name: HEPLIFYSERVER_LOKIURL
+              #              value: http://loki:3100/api/prom/push
             - name: HEPLIFYSERVER_PROMADDR
               value: 0.0.0.0:9096
+              #           - name: HEPLIFYSERVER_PROMTARGETIP
+              # value: 10.233.50.25
           image: sipcapture/heplify-server
           name: heplify-server
           ports:

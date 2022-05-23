@@ -27,14 +27,18 @@ spec:
       containers:
         - env:
             - name: DB_HOST
-              #value: 192.168.49.2
-              value: 10.233.18.94 
+              value: 10.233.8.165
+              #value: 10.233.42.168 
             - name: DB_PASS
               value: Y6MTmRl9nEfaOJrq9CYVSKJM
             - name: DB_USER
               value: homer_user
-            - name: LOKI_HOST
-              value: loki
+            - name: DB_NAME
+              value: homer_data
+#            - name: PORT
+#              value: "30007" 
+#            - name: LOKI_HOST
+#              value: loki
 #            - name: port
 #              value: '30007'
             - name: PROM_HOST

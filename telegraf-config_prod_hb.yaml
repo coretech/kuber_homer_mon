@@ -164,13 +164,13 @@ data:
        data_format = "value"
        data_type = "string"
 
-    [[inputs.kafka_consumer]]
-       #name = "upstream"
-       brokers = ["141.94.5.150:9092","51.38.198.90:9092","137.74.249.151:9092"]
-       topics = ["fspbx_health"]
-       #name_prefix = "fspbx_errors_"
-       #client_id = "Telegraf_prod2"
-       consumer_group = "telegraf_metrics_consumers"
-       data_format = "value"
-       data_type = "string"
-
+       #    [[inputs.kafka_consumer]]
+       #       #name = "upstream"
+       #       brokers = ["141.94.5.150:9092","51.38.198.90:9092","137.74.249.151:9092"]
+       #       topics = ["fspbx_health"]
+       #       #name_prefix = "fspbx_errors_"
+       #       #client_id = "Telegraf_prod2"
+       #       consumer_group = "telegraf_metrics_consumers"
+       #       data_format = "value"
+       #       data_type = "string"
+       #
