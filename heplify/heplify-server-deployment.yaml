@@ -1,73 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.26.1 (a9d05d509)
-    org.label-schema.group: monitoring
-  creationTimestamp: null
   labels:
     io.kompose.service: heplify-server
   name: heplify-server
   namespace: heplify
-
 spec:
   replicas: 1
   selector:
     matchLabels:
       io.kompose.service: heplify-server
-  strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.26.1 (a9d05d509)
-        org.label-schema.group: monitoring
-      creationTimestamp: null
       labels:
         io.kompose.service: heplify-server
     spec:
       containers:
         - args:
             - ./heplify-server
-          env:
-            - name: HEPLIFYSERVER_DBADDR
-              #value: 10.233.42.168:5432
-              value: 10.233.8.165:5432
-            - name: HEPLIFYSERVER_DBCONFTABLE
-              value: homer_config
-            - name: HEPLIFYSERVER_DBDATATABLE
-              value: homer_data
-            - name: HEPLIFYSERVER_DBDRIVER
-              value: postgres
-            - name: HEPLIFYSERVER_DBDROPDAYS
-              value: "2"
-            - name: HEPLIFYSERVER_DBPASS
-              value: Y6MTmRl9nEfaOJrq9CYVSKJM
-            - name: HEPLIFYSERVER_DBROTATE
-              value: "true"
-            - name: HEPLIFYSERVER_DBSHEMA
-              value: homer7
-            - name: HEPLIFYSERVER_DBUSER
-              value: homer_user
-            - name: HEPLIFYSERVER_DEDUP
-              value: "false"
-            - name: HEPLIFYSERVER_HEPADDR
-              value: 0.0.0.0:9060
-            - name: HEPLIFYSERVER_HEPTCPADDR
-              value: 0.0.0.0:9061
-            - name: HEPLIFYSERVER_LOGLVL
-              value: info
-            - name: HEPLIFYSERVER_LOGSTD
-              value: "true"
-            - name: HEPLIFYSERVER_LOKITIMER
-              value: "2"
-              #            - name: HEPLIFYSERVER_LOKIURL
-              #              value: http://loki:3100/api/prom/push
-            - name: HEPLIFYSERVER_PROMADDR
-              value: 0.0.0.0:9096
-              #           - name: HEPLIFYSERVER_PROMTARGETIP
-              # value: 10.233.50.25
+          envFrom:
+            - configMapRef:
+                name: heplify-config
+            - secretRef:
+                name: postgresql-secret
           image: sipcapture/heplify-server
           name: heplify-server
           ports:

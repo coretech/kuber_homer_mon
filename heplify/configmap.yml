@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: heplify
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: heplify-config
+  labels:
+    name: heplify-config
+  namespace: heplify
+data:
+   HEPLIFYSERVER_DBDATATABLE: homer_data
+   HEPLIFYSERVER_DBSHEMA: homer7
+   HEPLIFYSERVER_DBDRIVER: postgres
+   HEPLIFYSERVER_DBDROPDAYS: "2"
+   HEPLIFYSERVER_DBROTATE: "true"
+   HEPLIFYSERVER_DEDUP: "false"
+   HEPLIFYSERVER_HEPADDR: 0.0.0.0:9060
+   HEPLIFYSERVER_HEPTCPADDR: 0.0.0.0:9061
+   HEPLIFYSERVER_LOGLVL: info
+   HEPLIFYSERVER_LOGSTD: "true"
+   HEPLIFYSERVER_LOKITIMER: "2"
+   HEPLIFYSERVER_PROMADDR: 0.0.0.0:9096

@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kubegres-nodeport
-  namespace: kubegres-system
+  name: kubegres_DB-nodeport
+  namespace: kubegres_DB-system
 
 spec:
   type: NodePort

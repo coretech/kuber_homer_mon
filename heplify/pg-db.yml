@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgresql-secret
+  namespace: heplify
+data:
+  HEPLIFYSERVER_DBADDR: MTkyLjE2OC4yNC4xNzY6NTQzMg==
+  HEPLIFYSERVER_DBPASS: WTZNVG1SbDluRWZhT0pycTlDWVZTS0pN
+  HEPLIFYSERVER_DBUSER: aG9tZXJfdXNlcg==
+  HEPLIFYSERVER_DBCONFTABLE: aG9tZXJfZGF0YQ==
+type: Opaque

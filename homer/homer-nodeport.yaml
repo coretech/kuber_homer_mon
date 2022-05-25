@@ -3,7 +3,6 @@ kind: Service
 metadata:
   name: homer-nodeport
   namespace: homer
-
 spec:
   type: NodePort
   selector:

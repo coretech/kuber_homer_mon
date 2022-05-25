@@ -91,9 +91,9 @@ data:
 
      namepass = ["kafka_consumer"]
      source = '''
-   load("json.star", "json")
-   load("logging.star", "log")
-   def apply(metric):
+    load("json.star", "json")
+    load("logging.star", "log")
+    def apply(metric):
                #print(metric.fields.get("value"))
                j = json.decode(metric.fields.get("value")) # json
                metrics=[]

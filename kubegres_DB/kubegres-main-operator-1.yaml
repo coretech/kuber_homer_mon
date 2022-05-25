@@ -3,7 +3,7 @@ kind: Namespace
 metadata:
   labels:
     control-plane: controller-manager
-  name: kubegres-system
+  name: kubegres_DB-system
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -11,20 +11,20 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
   creationTimestamp: null
-  name: kubegres.kubegres.reactive-tech.io
+  name: kubegres_DB.kubegres_DB.reactive-tech.io
 spec:
-  group: kubegres.reactive-tech.io
+  group: kubegres_DB.reactive-tech.io
   names:
     kind: Kubegres
     listKind: KubegresList
-    plural: kubegres
-    singular: kubegres
+    plural: kubegres_DB
+    singular: kubegres_DB
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: Kubegres is the Schema for the kubegres API
+        description: Kubegres is the Schema for the kubegres_DB API
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
@@ -1909,14 +1909,14 @@ status:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kubegres-controller-manager
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager
+  namespace: kubegres_DB-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: kubegres-leader-election-role
-  namespace: kubegres-system
+  name: kubegres_DB-leader-election-role
+  namespace: kubegres_DB-system
 rules:
 - apiGroups:
   - ""
@@ -1944,7 +1944,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   creationTimestamp: null
-  name: kubegres-manager-role
+  name: kubegres_DB-manager-role
 rules:
 - apiGroups:
   - ""
@@ -2031,9 +2031,9 @@ rules:
   - update
   - watch
 - apiGroups:
-  - kubegres.reactive-tech.io
+  - kubegres_DB.reactive-tech.io
   resources:
-  - kubegres
+  - kubegres_DB
   verbs:
   - create
   - delete
@@ -2043,15 +2043,15 @@ rules:
   - update
   - watch
 - apiGroups:
-  - kubegres.reactive-tech.io
+  - kubegres_DB.reactive-tech.io
   resources:
-  - kubegres/finalizers
+  - kubegres_DB/finalizers
   verbs:
   - update
 - apiGroups:
-  - kubegres.reactive-tech.io
+  - kubegres_DB.reactive-tech.io
   resources:
-  - kubegres/status
+  - kubegres_DB/status
   verbs:
   - get
   - patch
@@ -2068,7 +2068,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: kubegres-metrics-reader
+  name: kubegres_DB-metrics-reader
 rules:
 - nonResourceURLs:
   - /metrics
@@ -2078,7 +2078,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: kubegres-proxy-role
+  name: kubegres_DB-proxy-role
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -2096,42 +2096,42 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: kubegres-leader-election-rolebinding
-  namespace: kubegres-system
+  name: kubegres_DB-leader-election-rolebinding
+  namespace: kubegres_DB-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: kubegres-leader-election-role
+  name: kubegres_DB-leader-election-role
 subjects:
 - kind: ServiceAccount
-  name: kubegres-controller-manager
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager
+  namespace: kubegres_DB-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kubegres-manager-rolebinding
+  name: kubegres_DB-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kubegres-manager-role
+  name: kubegres_DB-manager-role
 subjects:
 - kind: ServiceAccount
-  name: kubegres-controller-manager
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager
+  namespace: kubegres_DB-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kubegres-proxy-rolebinding
+  name: kubegres_DB-proxy-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: kubegres-proxy-role
+  name: kubegres_DB-proxy-role
 subjects:
 - kind: ServiceAccount
-  name: kubegres-controller-manager
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager
+  namespace: kubegres_DB-system
 ---
 apiVersion: v1
 data:
@@ -2149,16 +2149,16 @@ data:
       resourceName: d5ccd92e.reactive-tech.io
 kind: ConfigMap
 metadata:
-  name: kubegres-manager-config
-  namespace: kubegres-system
+  name: kubegres_DB-manager-config
+  namespace: kubegres_DB-system
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     control-plane: controller-manager
-  name: kubegres-controller-manager-metrics-service
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager-metrics-service
+  namespace: kubegres_DB-system
 spec:
   ports:
   - name: https
@@ -2172,8 +2172,8 @@ kind: Deployment
 metadata:
   labels:
     control-plane: controller-manager
-  name: kubegres-controller-manager
-  namespace: kubegres-system
+  name: kubegres_DB-controller-manager
+  namespace: kubegres_DB-system
 spec:
   replicas: 1
   selector:
@@ -2201,7 +2201,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: reactivetechio/kubegres:1.15
+        image: reactivetechio/kubegres_DB:1.15
         livenessProbe:
           httpGet:
             path: /healthz
@@ -2226,5 +2226,5 @@ spec:
           allowPrivilegeEscalation: false
       securityContext:
         runAsNonRoot: true
-      serviceAccountName: kubegres-controller-manager
+      serviceAccountName: kubegres_DB-controller-manager
       terminationGracePeriodSeconds: 10

@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: base-kubegres-config
-  namespace: kubegres-system2
+  name: base-kubegres_DB-config
+  namespace: kubegres_DB-system2
 
 # This is the base configuration for all Kubegres resources. It is automatically created by the Kubernetes operator.
 # It is created once for each namespace and it applies to all Kubegres resources on that namespace.

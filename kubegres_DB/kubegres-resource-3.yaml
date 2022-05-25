@@ -1,8 +1,8 @@
-apiVersion: kubegres.reactive-tech.io/v1
+apiVersion: kubegres_DB.reactive-tech.io/v1
 kind: Kubegres
 metadata:
   name: mypostgres
-  namespace: kubegres-system
+  namespace: kubegres_DB-system
 spec:
 
   replicas: 3

@@ -11,7 +11,7 @@ metadata:
     labels:
         app: influxdb
     name: influxdb
-    namespace: influx
+    namespace: influx_DB
 spec:
     replicas: 1
     selector:
@@ -31,17 +31,17 @@ spec:
                     name: influxdb
                 volumeMounts:
                   - mountPath: /root/.influxdbv2
-                    name: influx-pv
+                    name: influx_DB-pv
 
             volumes:
-               - name: influx-pv
+               - name: influx_DB-pv
                  persistentVolumeClaim:
-                    claimName: influx-pvc
-      
+                    claimName: influx_DB-pvc
+
 
                     #    volumeClaimTemplates:
                     #      - metadata:
-                    #            name: influx-pvc
+                    #            name: influx_DB-pvc
                     #            namespace: influxdb
                     #        spec:
                     #            accessModes:
@@ -54,7 +54,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: influxdb
-    namespace: influx
+    namespace: influx_DB
 spec:
     ports:
       - name: influxdb

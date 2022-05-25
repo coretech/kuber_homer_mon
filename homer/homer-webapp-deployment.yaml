@@ -1,10 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert -f docker-compose.yml
-    kompose.version: 1.26.1 (a9d05d509)
-  creationTimestamp: null
   labels:
     io.kompose.service: homer-webapp
   name: homer-webapp
@@ -17,36 +13,19 @@ spec:
   strategy: {}
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert -f docker-compose.yml
-        kompose.version: 1.26.1 (a9d05d509)
-      creationTimestamp: null
       labels:
         io.kompose.service: homer-webapp
     spec:
       containers:
-        - env:
-            - name: DB_HOST
-              value: 10.233.8.165
-              #value: 10.233.42.168 
-            - name: DB_PASS
-              value: Y6MTmRl9nEfaOJrq9CYVSKJM
-            - name: DB_USER
-              value: homer_user
-            - name: DB_NAME
-              value: homer_data
-#            - name: PORT
-#              value: "30007" 
-#            - name: LOKI_HOST
-#              value: loki
-#            - name: port
-#              value: '30007'
+        - name: homer-webapp
+          image: sipcapture/webapp
+          env:
             - name: PROM_HOST
               value: prometheus
-          image: sipcapture/webapp
-          name: homer-webapp
+          envFrom:
+            - secretRef:
+                name: postgresql-homer-secret
           ports:
             - containerPort: 80
-          resources: {}
       restartPolicy: Always
 status: {}
