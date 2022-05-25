@@ -1,13 +1,41 @@
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name:  prometheus-pvc
+#  namespace: promet
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 2Gi
+#  storageClassName: metrics-nfs-storage
+#
+#---
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-pv
+  namespace: promet
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.25.199
+    path: "/mnt/tnas-de/icc-recordings"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
-metadata: 
-  name:  prometheus-pvc
+metadata:
+  name: prometheus-pvc
   namespace: promet
-spec: 
-  accessModes: 
-    - ReadWriteOnce
-  resources: 
-    requests: 
-      storage: 2Gi
-  storageClassName: metrics-nfs-storage
-
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeName: prometheus-pv
+  resources:
+    requests:
+      storage: 80Gi
