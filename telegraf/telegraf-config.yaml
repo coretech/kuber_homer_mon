@@ -76,7 +76,7 @@ data:
       username = "admin"
       password = "1cc@syn3rgyb3am"
       #      database = "health" # required
-      database = "gatling" # required
+      database = "gatling_2" # required
       timeout = "5s"
       namepass = ["fspbx_health*"]
    
