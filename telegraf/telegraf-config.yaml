@@ -67,7 +67,7 @@ data:
       username = "admin"
       password = "1cc@syn3rgyb3am"
       #      database = "health" # required
-      database = "gatling" # required
+      database = "http-error" # required
       timeout = "5s"
       namepass = ["fspbx_errors*"]
    
