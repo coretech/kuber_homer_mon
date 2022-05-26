@@ -229,7 +229,7 @@ data:
    
    # used for signing
    #;secret_key = SW2YcwTIb9zpOOhoPsMm
-   ;secret_key = SuperSecretPassword
+   ;secret_key = \6(dW>;?/Lu"X\<ejNAK@'43/Z~ZwPtj
    
    # disable gravatar profile images
    ;disable_gravatar = false
