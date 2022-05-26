@@ -69,8 +69,17 @@ data:
       #      database = "health" # required
       database = "gatling" # required
       timeout = "5s"
-      namepass = ["host_stats*"]
-
+      namepass = ["fspbx_errors*"]
+   
+    [[outputs.influxdb]]
+      urls = ["http://192.168.24.176:8086"]
+      username = "admin"
+      password = "1cc@syn3rgyb3am"
+      #      database = "health" # required
+      database = "gatling" # required
+      timeout = "5s"
+      namepass = ["fspbx_health*"]
+   
     [[inputs.diskio]]
 
     [[inputs.kernel]]
