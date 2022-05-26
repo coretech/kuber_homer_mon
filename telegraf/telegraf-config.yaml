@@ -90,9 +90,7 @@ data:
     [[inputs.kafka_consumer]]
        name_override = "fspbx_health"
        brokers = ["192.168.28.16:9091","192.168.29.16:9091","192.168.30.16:9091"]
-       #brokers = ["145.239.102.212:9092","51.195.69.231:9092","137.74.249.153:9092"]
        topics = ["fspbx_health"]
-       #client_id = "Telegraf_prod"
        consumer_group = "telegraf_metrics_consumers"
        data_format = "value"
        data_type = "string"
@@ -100,10 +98,7 @@ data:
     [[inputs.kafka_consumer]]
        name_override = "fspbx_health"
        brokers = ["192.168.28.15:9091","192.168.29.15:9091","192.168.30.15:9091"]
-       #brokers = ["141.94.5.150:9092","51.38.198.90:9092","137.74.249.151:9092"]
        topics = ["fspbx_health"]
-       #name_prefix = "fspbx_errors_"
-       #client_id = "Telegraf_prod2"
        consumer_group = "telegraf_metrics_consumers"
        data_format = "value"
        data_type = "string"
@@ -150,9 +145,7 @@ data:
     [[inputs.kafka_consumer]]
        name_override = "fspbx_errors"
        brokers = ["192.168.28.16:9091","192.168.29.16:9091","192.168.30.16:9091"]
-       #brokers = ["145.239.102.212:9092","51.195.69.231:9092","137.74.249.153:9092"]
        topics = ["fspbx_errors"]
-       #client_id = "Telegraf_prod"
        consumer_group = "telegraf_metrics_consumers"
        data_format = "value"
        data_type = "string"
@@ -160,9 +153,7 @@ data:
     [[inputs.kafka_consumer]]
        name_override = "fspbx_errors"
        brokers = ["192.168.28.15:9091","192.168.29.15:9091","192.168.30.15:9091"]
-       #brokers = ["145.239.102.212:9092","51.195.69.231:9092","137.74.249.153:9092"]
        topics = ["fspbx_errors"]
-       #client_id = "Telegraf_prod"
        consumer_group = "telegraf_metrics_consumers"
        data_format = "value"
        data_type = "string"
