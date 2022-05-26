@@ -62,6 +62,7 @@ spec:
     - port: 3000
       protocol: TCP
       targetPort: http-grafana
+      nodePort: 30509
   selector:
     app: grafana
   sessionAffinity: None
