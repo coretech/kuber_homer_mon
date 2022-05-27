@@ -69,8 +69,21 @@ data:
       #      database = "health" # required
       database = "gatling" # required
       timeout = "5s"
-      namepass = ["host_stats*"]
+      #      namepass = ["host_stats*"]
 
+
+      #    # Configuration for sending metrics to InfluxDB
+      #    [[outputs.influxdb]]
+      #      urls = ["http://192.168.24.176:8086"]
+      #      username = "admin"
+      #      password = "1cc@syn3rgyb3am"
+      #      #      database = "health" # required
+      #      database = "gatling" # required
+      #      timeout = "5s"
+      #      namepass = ["fspbx_errors*"]
+
+
+  
     [[inputs.diskio]]
 
     [[inputs.kernel]]
