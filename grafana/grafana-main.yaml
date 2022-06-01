@@ -5,6 +5,8 @@ metadata:
     app: grafana
   name: grafana
   namespace: grafana
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   selector:
     matchLabels:
@@ -57,6 +59,8 @@ kind: Service
 metadata:
   name: grafana
   namespace: grafana
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   ports:
     - port: 3000
