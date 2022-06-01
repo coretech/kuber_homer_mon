@@ -66,8 +66,7 @@ data:
       urls = ["http://192.168.24.176:8086"]
       username = "admin"
       password = "1cc@syn3rgyb3am"
-      #      database = "health" # required
-      database = "http-error" # required
+      database = "gatling" # required
       timeout = "5s"
 
   
