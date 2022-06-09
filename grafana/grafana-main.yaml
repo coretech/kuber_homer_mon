@@ -20,9 +20,6 @@ spec:
       - name: grafana-config-volume
         configMap:
           name: grafana-config
-          items:
-          - key: grafana.ini
-            path: grafana.ini
 
       securityContext:
         fsGroup: 472
@@ -57,7 +54,7 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv
-            - mountPath: /etc/grafana/
+            - mountPath: /etc/grafana/grafana.ini
               name: grafana-config-volume
       volumes:
         - name: grafana-pv
