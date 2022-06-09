@@ -5,6 +5,8 @@ metadata:
     io.kompose.service: homer-webapp
   name: homer-webapp
   namespace: homer
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:

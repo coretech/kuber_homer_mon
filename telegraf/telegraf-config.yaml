@@ -69,7 +69,6 @@ data:
       database = "gatling" # required
       timeout = "5s"
 
-  
     [[inputs.diskio]]
 
     [[inputs.kernel]]
