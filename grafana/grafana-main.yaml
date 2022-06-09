@@ -16,6 +16,14 @@ spec:
       labels:
         app: grafana
     spec:
+      volumes:
+      - name: grafana-config-volume
+        configMap:
+          name: grafana-config
+          items:
+          - key: grafana.ini
+            path: grafana.ini
+
       securityContext:
         fsGroup: 472
         supplementalGroups:
@@ -49,10 +57,9 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/grafana
               name: grafana-pv
+            - name: grafana-config-volume
+              mountPath: /etc/grafana/
       volumes:
-        - name: grafana-config
-          mountPath: /etc/grafana/grafana.ini
-          subPath: grafana.ini
         - name: grafana-pv
           persistentVolumeClaim:
             claimName: grafana-pvc
