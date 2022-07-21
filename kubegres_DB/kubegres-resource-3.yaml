@@ -13,7 +13,7 @@ spec:
   #  - name: my-private-docker-repo-secret
 
   database:
-    size: 500Mi
+    size: 5000Mi
     storageClassName: metrics-nfs-storage
   #  volumeMount: /var/lib/postgres/data
 
